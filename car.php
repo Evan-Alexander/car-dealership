@@ -1,7 +1,7 @@
 <?php
     class Car
     {
-        public $make_model;
+        private $make_model;
         public $price;
         public $miles;
 
@@ -11,6 +11,15 @@
             $this->price = $car_price;
             $this->miles = $car_miles;
         }
+        function setModel($new_model)
+        {
+            $this->make_model = $new_model;
+        }
+        function getModel()
+        {
+            return $this->make_model;
+        }
+
         function worthbuying($max_price)
         {
             return $this->price < ($max_price + 100);
@@ -44,7 +53,8 @@
       <ul>
           <?php
               foreach($cars_matching_search as $automobile) {
-                  echo "<li>" . $automobile->make_model . "</li>";
+                  $current_model = $automobile->getModel();
+                  echo "<li> $current_model </li>";
                   echo "<ul>";
                       echo "<li> $$automobile->price </li>";
                       echo "<li> Miles: $automobile->miles </li>";
