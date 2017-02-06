@@ -41,6 +41,10 @@
         {
             return $this->price < ($max_price + 100);
         }
+        function maxMilage($max_miles)
+        {
+            return $this->miles < $max_miles;
+        }
     }
 
 
@@ -53,7 +57,7 @@
 
     $cars_matching_search = array();
     foreach ($cars as $automobile) {
-        if ($automobile->worthbuying($_GET["price"])) {
+        if ($automobile->worthbuying($_GET["price"]) && $automobile->maxMilage($_GET["milage"])) {
             array_push($cars_matching_search, $automobile);
         }
     }
@@ -69,21 +73,27 @@
       <h1>Jason and Carlos' Car Garage</h1>
       <ul>
           <?php
-              foreach($cars_matching_search as $automobile) {
-                  $current_model = $automobile->getModel();
-                  $current_price = "$" . $automobile->getPrice();
-                  $current_miles = $automobile->getMiles();
-                  echo "<div class='row' > <div class = 'col-sm-4'>";
-                  echo "<img src=$automobile->image_path >";
-                  echo "</div>";
-                  echo "<div class = 'col-sm-4'>";
-                  echo "<li> $current_model </li>";
-                  echo "<ul>";
-                  echo "<li> $current_price </li>";
-                  echo "<li> Miles: $current_miles </li>";
-                  echo "</ul>";
-                  echo "</div></div>";
+              if (!empty($cars_matching_search)) {
+                  foreach($cars_matching_search as $automobile) {
+                      $current_model = $automobile->getModel();
+                      $current_price = "$" . $automobile->getPrice();
+                      $current_miles = $automobile->getMiles();
+                      echo "<div class='row' > <div class = 'col-sm-4'>";
+                      echo "<img src=$automobile->image_path >";
+                      echo "</div>";
+                      echo "<div class = 'col-sm-4'>";
+                      echo "<li> $current_model </li>";
+                      echo "<ul>";
+                      echo "<li> $current_price </li>";
+                      echo "<li> Miles: $current_miles </li>";
+                      echo "</ul>";
+                      echo "</div></div>";
+                  }
+
               }
+              else {
+                echo "Whaddup doc?";
+             }
           ?>
       </ul>
   </body>
